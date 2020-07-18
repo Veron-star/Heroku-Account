@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Beth+Ellen&display=swap" rel="stylesheet">
+    <a href="https://icons8.com/icon/QV5JEtrTP6nH/fire"></a>
+    <a href="https://icons8.com/icon/80319/home"></a>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap'); 
+@import url('https://fonts.googleapis.com/css2?family=Beth+Ellen&display=swap');
+body {
+    margin: auto;
+    padding: 0;
+    display: block;  
+}
+header {
+    z-index: 1000;
+    left: 100;
+    top: 0;
+    width: 100vw;
+    height: auto;
+    text-align: center;
+    flex-direction: column;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 100px 0;
+}
+.cta {
+    display: inline-block;
+    padding: 10px 30px;
+    color: turquoise;
+    background-color: transparent;
+    border: 2px solid turquoise;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    margin-top: 30px;
+    margin-left: 300px;
+    transition: 0.3s ease;
+    transition-property: background-color, color;
+    align-items: center;
+}
+.cta:hover {
+    color: whitesmoke;
+    background-color: turquoise;
+}
+img {
+    width: 30px;
+    height: 30px;
+}
+h1 {
+    color: black;
+    font-size: 4rem;
+    margin-top: 50px;
+    line-height: 2.5rem;
+    font-weight: 300;
+    letter-spacing: 0.05rem;
+    text-align: center;
+    text-transform: uppercase;
+}
+h1 .icon {
+    width: 100px;
+    height: 100px;
+}
+h3 {
+    color: black;
+    font-size: 2rem;
+    margin-top: 5px;
+    line-height: 2.5rem;
+    font-weight: 300;
+    letter-spacing: 0.05rem;
+    text-align: center;
+}
+    </style>
+</head>
+<body>
+    <h1>Hot Restaurant</h1>
+    <hr>
+    <a href="reservation"><button>Make Reservation</button></a>
+    <a href="tables"><button>View Reservations</button></a>
+    <a href="/"><button>Home</button></a>
+
+    <h3>Current Reservation and Waiting List</h3>
+
+
+    <div class="reservationsContainer">
+        <h5>Current Reservations</h5>
+        <ol id="reservations">
+        </ol>
+    </div>
+
+    <div>
+        <h5>Waiting List</h5>
+        <ul id="waitinglist">
+        </ul>
+    </div>
+    
+    <script type="text/javascript">
+
+        $.get("/api/reservations", function(data) {
+            const reservations = data;
+            const reservationsList = $("#reservations");
+
+            for (const reservation of reservations) {
+                let element = $("<li>");
+                element.html(reservation.customerName);
+                reservationsList.append(element);
+            }
+        })
+
+        $.get("/api/waitinglist", function(data) {
+            const waitingList = data;
+            const waitingListDiv = $("#waitinglist");
+        
+            for (const customer of waitingList) {
+            let element = $("<li>");
+            element.html(customer.customerName);
+            waitingListDiv.append(element);
+        }
+        })
+
+        
+
+    </script>
+</body>
+</html>
